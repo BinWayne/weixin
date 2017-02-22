@@ -1,0 +1,25 @@
+
+apply plugin: 'war'
+apply plugin: 'java'
+repositories {
+    mavenCentral()
+}
+dependencies {
+// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+//compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1'
+compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+
+
+}
+
+task copyJars(type: Copy) {
+  from configurations.runtime
+  into '/WebContent/WEB-INF/lib' 
+}
+
+
+task createJavaProject << {
+      sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs()}
+}
