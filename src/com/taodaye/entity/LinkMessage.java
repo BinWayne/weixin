@@ -1,11 +1,11 @@
 package com.taodaye.entity;
 
-public class TextMessage extends Message{
+public class LinkMessage extends Message{
 
-	
 
-	private String Content;
-
+	private String Title;
+	private String Description;
+	private String Url;
 	
 	public String getToUserName() {
 		return ToUserName;
@@ -31,11 +31,23 @@ public class TextMessage extends Message{
 	public void setMsgType(String msgType) {
 		MsgType = msgType;
 	}
-	public String getContent() {
-		return Content;
+	public String getTitle() {
+		return Title;
 	}
-	public void setContent(String content) {
-		Content = content;
+	public void setTitle(String title) {
+		Title = title;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	public String getUrl() {
+		return Url;
+	}
+	public void setUrl(String url) {
+		Url = url;
 	}
 	public String getMsgId() {
 		return MsgId;

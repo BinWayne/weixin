@@ -13,7 +13,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.taodaye.entity.TextMessage;
+import com.taodaye.entity.Message;
 import com.thoughtworks.xstream.XStream;
 
 public class MessageUtil {
@@ -49,10 +49,12 @@ public class MessageUtil {
 	 * @param textMessage
 	 * @return
 	 */
-	public static String textMessageToXML(TextMessage textMessage){
+	public static String messageToXML(Message message){
 		XStream xstream = new XStream();
-		xstream.alias("xml", textMessage.getClass());
-		return xstream.toXML(textMessage);
+		xstream.alias("xml", message.getClass());
+		return xstream.toXML(message);
 		
 	}
+	
+	
 }

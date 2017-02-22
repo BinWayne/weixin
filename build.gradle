@@ -7,9 +7,10 @@ repositories {
 dependencies {
 // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 //compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
-compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1'
-compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
-
+//compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1'
+//compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+// https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
+compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.2.3',classifier:'jdk15'
 
 }
 

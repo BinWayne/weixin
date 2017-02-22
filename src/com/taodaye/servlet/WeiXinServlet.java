@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.dom4j.DocumentException;
 
+import com.taodaye.entity.SearchResult;
 import com.taodaye.entity.TextMessage;
 import com.taodaye.util.CheckUtil;
+import com.taodaye.util.JsonUtil;
 import com.taodaye.util.MessageUtil;
-import com.thoughtworks.xstream.converters.basic.DateConverter;
+import com.yunpan.service.SearchResourceService;
+import com.yunpan.service.impl.SearchResourceServiceImpl;
 
 public class WeiXinServlet extends HttpServlet{
 
@@ -38,7 +41,6 @@ public class WeiXinServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		System.out.println(new Date().getTime());
 		PrintWriter out  = resp.getWriter();
 		Map<String, String> map;
 		try {
@@ -47,23 +49,29 @@ public class WeiXinServlet extends HttpServlet{
 			String toUserName = map.get("ToUserName");
 			String msgType = map.get("MsgType");
 			String content = map.get("Content");
+			if(content!=null && content!=""){
+				SearchResourceService searchService = new SearchResourceServiceImpl();
+				String resultJson = searchService.searchOrderByTime(content);
+				SearchResult result = JsonUtil.jsonToObject(resultJson);
+				//next step: write a jsp/html, then generate link to user
+			}
 			String msgId = map.get("MsgId");
 			String message = null;
 			if("text".equals(msgType)){
 				TextMessage textMessage = new TextMessage();
-				textMessage.setFromUserName(fromUserName);
-				textMessage.setToUserName(toUserName);
+				textMessage.setFromUserName(toUserName);
+				textMessage.setToUserName(fromUserName);
 				textMessage.setMsgType("text");
 				long currentTime = new Date().getTime();
 				textMessage.setCreateTime(currentTime+"");
 				textMessage.setMsgId(msgId);
-				textMessage.setContent("The message you sent is: "+content);
-				message = MessageUtil.textMessageToXML(textMessage);
+				textMessage.setContent("The result is: "+"<a href='http://www.baidu.com'>"+content+"</a>");
+				message = MessageUtil.messageToXML(textMessage);
 				}
-			System.out.print(message);
+			
+			
 			out.print(message);
 			out.flush();
-			System.out.println(new Date().getTime());
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
