@@ -1,16 +1,33 @@
 
 apply plugin: 'war'
-apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+
+eclipse{
+	pathVariables 'GRADLE_HOME': file('/best/software/gradle'), 'TOMCAT_HOME': file('../tomcat')
+	wtp {
+		component {
+			contextPath = 'taodaye'
+			deployName = 'taodaye'
+			sourceDirs += file('./src')
+		}
+	}
+}
+
 repositories {
     mavenCentral()
 }
 dependencies {
 // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-//compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+	compile 'org.apache.httpcomponents:httpclient:4.5.3'
 //compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.3.1'
 //compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
 // https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
-compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.2.3',classifier:'jdk15'
+	compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.2.3',classifier:'jdk15'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+    
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.6'
 
 }
 

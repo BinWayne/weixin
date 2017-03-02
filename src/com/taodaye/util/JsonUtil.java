@@ -1,5 +1,10 @@
 package com.taodaye.util;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taodaye.entity.SearchResult;
 
 import net.sf.json.JSONObject;
@@ -24,6 +29,20 @@ public class JsonUtil {
 		JSONObject jsonObj = JSONObject.fromObject(jsonString);
 		result = (SearchResult) JSONObject.toBean(jsonObj, SearchResult.class);
 		return result;
+	}
+	
+	public static <T> T json2Ojbect(String jsonInString, Class<T> clazz) {
+		JSONObject jsonObj = JSONObject.fromObject(jsonInString);
+		@SuppressWarnings("unchecked")
+		T obj = (T) JSONObject.toBean(jsonObj, clazz);
+		return obj;
+	}
+	
+	public static <T> T jacksonJson2Ojbect(String jsonInString, Class<T> clazz) throws JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+
+		T obj = mapper.readValue(jsonInString, clazz);
+		return obj;
 	}
 	
 	public static void main(String[] args){
