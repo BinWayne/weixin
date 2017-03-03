@@ -10,12 +10,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.taodaye.search.entity.SearchApiOrderParam;
 import com.taodaye.search.entity.SearchResultObject;
 import com.taodaye.search.processor.DataProcessor;
 
 public class BaiDuYunSearcher implements Searcher{
+	
+	private static final Logger logger = LogManager.getLogger(BaiDuYunSearcher.class);
 
 	private final String SEARCH_ENGINE_API = "http://api.ygyhg.com/pc/free";
 	
@@ -40,7 +44,7 @@ public class BaiDuYunSearcher implements Searcher{
 			// Please note that if response content is not fully consumed the underlying
 			// connection cannot be safely re-used and will be shut down and discarded
 			// by the connection manager. 
-		    System.out.println(response.getStatusLine());
+			logger.info(response.getStatusLine());
 		    HttpEntity entity1 = response.getEntity();
 		    InputStream in = entity1.getContent();
 		    res = processor.process(in, SearchResultObject.class);

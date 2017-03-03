@@ -6,10 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.taodaye.util.JsonUtil;
 
 public class BaiDuYunDataProcessor implements DataProcessor{
+	
+	private static final Logger logger = LogManager.getLogger(BaiDuYunDataProcessor.class);
 
 	@Override
 	public <T> T process(InputStream in, Class<T> clazz) {
@@ -24,12 +28,11 @@ public class BaiDuYunDataProcessor implements DataProcessor{
 	    	try {
 				line = br.readLine();
 				if (StringUtils.isNotBlank(line)) {
-					System.out.println(line);
+					logger.info(line);
 					res = JsonUtil.jacksonJson2Ojbect(line, clazz);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Failed to parse response data.", e);
 			}
 		} while (line != null);
 		return res;
