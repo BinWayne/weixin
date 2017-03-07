@@ -21,18 +21,19 @@ public class BaiDuYunSearcher implements Searcher{
 	
 	private static final Logger logger = LogManager.getLogger(BaiDuYunSearcher.class);
 
-	private final String SEARCH_ENGINE_API = "http://api.ygyhg.com/pc/free";
+	private String searchEngineApi = "http://api.ygyhg.com/pc/free";
 	
 	@Override
 	public String getApi() {
-		return SEARCH_ENGINE_API;
+		return searchEngineApi;
 	}
 
 	@Override
 	public SearchResultObject search(String searchStr, DataProcessor processor) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		String req_url = String.format("%s?keyword=%s&order=%s&num=%d", getApi(), searchStr, SearchApiOrderParam.ORDER_FREETIME,10);
-		HttpGet httpGet = new HttpGet(req_url);
+		searchEngineApi = String.format("%s?keyword=%s&order=%s&num=%d", getApi(), searchStr, SearchApiOrderParam.ORDER_FREETIME,10);
+		logger.info(String.format("Starting to request: %s.", searchEngineApi));
+		HttpGet httpGet = new HttpGet(searchEngineApi);
 		CloseableHttpResponse response = null;
 		SearchResultObject res = null;
 		try {
@@ -52,18 +53,17 @@ public class BaiDuYunSearcher implements Searcher{
 		    // and ensure it is fully consumed
 		    EntityUtils.consume(entity1);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
 		} finally {
 			if (response != null) {
 				try {
 					response.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("Failed to close the http response.", e);
 				}
 			}
 		}

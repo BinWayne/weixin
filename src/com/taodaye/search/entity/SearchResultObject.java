@@ -27,7 +27,7 @@ public class SearchResultObject {
 	public void setCounts(int counts) {
 		this.counts = counts;
 	}
-
+	
 	public List<SearchResultRecordDetail> getContent() {
 		return content;
 	}
@@ -35,7 +35,7 @@ public class SearchResultObject {
 	public void setContent(List<SearchResultRecordDetail> content) {
 		this.content = content;
 	}
-	
+
 	@Override
 	public String toString(){
 		return JSONObject.fromObject(this).toString();

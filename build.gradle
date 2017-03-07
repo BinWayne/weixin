@@ -24,6 +24,7 @@ dependencies {
 // https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
 	compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.2.3',classifier:'jdk15'
 	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.2.0'
     
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.6'

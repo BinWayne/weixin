@@ -16,7 +16,7 @@ public class BaiDuYunDataProcessor implements DataProcessor{
 	private static final Logger logger = LogManager.getLogger(BaiDuYunDataProcessor.class);
 
 	@Override
-	public <T> T process(InputStream in, Class<T> clazz) {
+	public <T> T process(InputStream in, Class<T> clazz) throws Exception {
 		if (in == null) {
 			return null;
 		}
@@ -31,8 +31,9 @@ public class BaiDuYunDataProcessor implements DataProcessor{
 					logger.info(line);
 					res = JsonUtil.jacksonJson2Ojbect(line, clazz);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				logger.error("Failed to parse response data.", e);
+				throw e;
 			}
 		} while (line != null);
 		return res;
